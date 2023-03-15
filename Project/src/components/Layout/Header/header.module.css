@@ -1,0 +1,47 @@
+.header {
+  display: grid;
+  padding: 0 80px;
+  margin-bottom: 100px;
+  grid-template-columns: repeat(2, fit-content(200px));
+  height: 70px;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--red);
+  background-color: #fff;
+  box-shadow: 0px 10px 63px rgba(0, 0, 0, 0.07);
+}
+
+.logo {
+  display: flex;
+  margin-right: 50px;
+}
+.imgTomato {
+  margin-right: 13px;
+}
+
+.logoText {
+  font-size: 24px;
+  font-weight: 300;
+}
+
+.imgColumns {
+  margin-right: 9px;
+}
+
+.stat {
+  display: flex;
+  font-size: 16px;
+}
+
+@media (max-width: 900px) {
+  .header {
+    padding: 0 50px;
+  }
+}
+
+@media (max-width: 500px) {
+  .header {
+    padding: 0 15px;
+  }
+}

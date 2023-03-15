@@ -1,0 +1,46 @@
+.tasks {
+  display: grid;
+}
+
+.title {
+  font-size: 24px;
+  line-height: 33px;
+  font-weight: 700;
+}
+
+.point {
+  width: 8px;
+  margin-right: 15px;
+  color: #b7280f;
+}
+.text {
+  width: 508px;
+  margin-bottom: 25px;
+  line-height: 33px;
+}
+
+.textareaTask {
+  width: 370px;
+  height: 55px;
+  margin-bottom: 25px;
+  padding: 19px 0 19px 15px;
+  background-color: var(--greyF4);
+  color: #999999;
+  font-weight: 300;
+  line-height: 17px;
+  border: none;
+}
+
+.submitButton {
+  padding: 19px 51px;
+  margin-bottom: 25px;
+  text-align: center;
+  color: #fff;
+  background-color: var(--green);
+  cursor: pointer;
+  line-height: 17px;
+}
+
+.submitButton:hover {
+  background-color: var(--dark-green);
+}
