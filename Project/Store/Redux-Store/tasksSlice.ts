@@ -41,7 +41,7 @@ const tasksSlice = createSlice({
     },
 
     decrementTomat: (state, index: PayloadAction<number>) => {
-      if (state.tasks[index.payload].numTomatos <= 1) return;
+      if (state.tasks[index.payload].numTomatos <= 0) return;
       state.tasks[index.payload].numTomatos -= 1;
     },
     openTaskMenu(

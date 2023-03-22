@@ -18,16 +18,16 @@ interface ITask {
   index: number;
 }
 
-const arr: boolean[] = [];
+const openCloseState: boolean[] = [];
 
 export function Task({ text, numTomatos, index }: ITask) {
   const [edited, setEdit] = useState(false);
   const [value, setValue] = useState(text);
-  const [openMenu, setOpenMenu] = useState(arr[index] ? arr[index] : false);
+  const [openMenu, setOpenMenu] = useState(
+    openCloseState[index] ? openCloseState[index] : false
+  );
   const dispatch = useDispatch();
   const ref = useRef<HTMLTextAreaElement>(null);
-  console.log(arr);
-
   useEffect(() => {
     if (!ref.current) return;
     ref.current.select();
@@ -42,9 +42,8 @@ export function Task({ text, numTomatos, index }: ITask) {
         !event.target.closest("#dialog-root")
       ) {
         console.log("CloseMenu");
-
         setOpenMenu(false);
-        arr.length = 0;
+        openCloseState.length = 0;
       }
     }
     document.addEventListener("click", handleClick);
@@ -64,12 +63,12 @@ export function Task({ text, numTomatos, index }: ITask) {
         break;
       case "increment":
         setOpenMenu(true);
-        arr[index] = openMenu;
+        openCloseState[index] = openMenu;
         dispatch(incrementTomat(index));
 
         break;
       case "decrement":
-        arr[index] = openMenu;
+        openCloseState[index] = openMenu;
         dispatch(decrementTomat(index));
         break;
     }

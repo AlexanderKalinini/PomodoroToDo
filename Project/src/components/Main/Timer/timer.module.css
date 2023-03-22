@@ -9,8 +9,22 @@
   color: #fff;
 }
 
+.backgroundColorRed {
+  background-color: var(--red);
+}
+
+.colorBorderRed {
+  color: var(--red);
+  outline-color: var(--red);
+}
+
 .timerHead_span {
+  vertical-align: center;
+
+  width: 250px;
+  max-height: 36px;
   font-weight: 700;
+  overflow: hidden;
 }
 .dashboard {
   display: flex;
@@ -29,31 +43,51 @@
 }
 
 .time {
+  min-width: 375px;
   font-size: 150px;
   line-height: 179px;
   font-weight: 200;
   margin-right: 25px;
+  text-align: end;
+}
+
+.plusBtn:hover circle {
+  fill: var(--dark-green);
 }
 
 .btnMenu {
   position: relative;
 }
 
-.btn {
+.btnStart {
   padding: 19px 51px;
   text-align: center;
   color: #fff;
   background-color: var(--green);
-  cursor: pointer;
-  line-height: 17px;
-}
 
-.btn:nth-child(1) {
+  line-height: 17px;
   margin-right: 25px;
 }
 
-.btn:nth-child(2) {
+.btnStart:hover {
+  background-color: var(--dark-green);
+}
+
+.btnStop {
+  padding: 19px 51px;
+  text-align: center;
   background-color: inherit;
   color: var(--greyC4);
   outline: 1px solid var(--greyC4);
+}
+
+.btnStop:hover {
+  background-color: var(--red);
+  color: #fff;
+  outline: none;
+}
+
+.btnStopRed {
+  color: var(--red);
+  outline-color: var(--red);
 }

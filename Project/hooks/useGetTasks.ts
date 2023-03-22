@@ -10,5 +10,9 @@ export function useGetTasksAfterRender() {
     setTasks(data.tasks);
   }, [data]);
 
-  return [tasks];
+  return [tasks] as {
+    task: string;
+    numTomatos: number;
+    openCloseTaskMenu?: boolean;
+  }[][];
 }

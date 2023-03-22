@@ -32,26 +32,31 @@ export function Menu({
         />{" "}
         Увеличить
       </button>
-      <button id="decrement" className={styles.menuBtn}>
-        {numTomatos > 1 ? (
+
+      {numTomatos > 1 ? (
+        <button id="decrement" className={styles.menuBtn}>
           <Image
             className={styles.buttonImg}
             src="/minus_color.svg"
             width={15}
             height={15}
             alt="minus"
-          />
-        ) : (
+          />{" "}
+          Уменьшить{" "}
+        </button>
+      ) : (
+        <button disabled id="decrement" className={styles.menuBtn}>
           <Image
             className={styles.buttonImg}
             src="/minus.svg"
             width={15}
             height={15}
             alt="minus"
-          />
-        )}
-        Уменьшить
-      </button>
+          />{" "}
+          Уменьшить{" "}
+        </button>
+      )}
+
       <button id="edit" className={styles.menuBtn}>
         {" "}
         <Image
