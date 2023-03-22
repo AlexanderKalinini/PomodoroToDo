@@ -1,18 +1,21 @@
-import React, {
-  FormEvent,
-  ReactNode,
-  TextareaHTMLAttributes,
-  useState,
-} from "react";
+import React, { FormEvent, useState } from "react";
 import styles from "./tasks.module.css";
 
-import { useRef } from "react";
-import { generateKey } from "crypto";
+import { addTask } from "../../../../Store/Redux-Store/tasksSlice";
+import { useDispatch } from "react-redux";
+
 import { generateRandomeString } from "../../../../utils/react/generateRandomeString";
 import { Task } from "./Task/Task";
+import { useGetTasksAfterRender } from "../../../../hooks/useGetTasks";
+
 export function Tasks() {
-  const [tasks, setTask] = useState<ReactNode[]>([]);
+  const [tasks] = useGetTasksAfterRender();
+
   const [value, setValue] = useState("");
+  const dispatch = useDispatch();
+
+  let minutes = 0;
+  let hours = 0;
 
   function handleChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
     setValue(event.target.value);
@@ -21,10 +24,7 @@ export function Tasks() {
   function handleClick(event: FormEvent) {
     event.preventDefault();
     if (!value) return;
-    setTask((prev) => [
-      ...prev,
-      <Task numTomatos={1} key={generateRandomeString()} text={value} />,
-    ]);
+    dispatch(addTask({ task: value, numTomatos: 1, openMenu: false }));
     setValue("");
   }
 
@@ -65,7 +65,35 @@ export function Tasks() {
           Добавить
         </button>
       </form>
-      <ul>{tasks}</ul>
+
+      <ul className={styles.tasks}>
+        {" "}
+        {tasks.map((obj: any, index: number) => {
+          minutes += obj.numTomatos * 25;
+          hours = Math.floor(minutes / 60);
+          return (
+            <Task
+              index={index}
+              numTomatos={obj.numTomatos}
+              key={generateRandomeString()}
+              text={obj.task}
+            />
+          );
+        })}
+      </ul>
+      {minutes !== 0 && (
+        <span className={styles.time}>
+          {hours > 0
+            ? hours +
+              (hours === 1
+                ? " час"
+                : 1 < hours && hours < 5
+                ? " часа "
+                : " часов ")
+            : null}{" "}
+          {minutes % 60} минут
+        </span>
+      )}
     </div>
   );
 }

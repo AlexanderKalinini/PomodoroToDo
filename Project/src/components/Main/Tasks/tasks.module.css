@@ -44,3 +44,12 @@
 .submitButton:hover {
   background-color: var(--dark-green);
 }
+
+.tasks {
+  margin-bottom: 19px;
+}
+
+.time {
+  font-weight: 300;
+  color: #999999;
+}

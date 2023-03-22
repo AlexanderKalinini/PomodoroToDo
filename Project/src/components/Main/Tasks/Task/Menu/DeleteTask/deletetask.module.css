@@ -1,0 +1,50 @@
+.coverDiv {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  opacity: 0.5;
+}
+
+.dialogWindow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+
+  padding: 25px 0;
+  top: 50%;
+  left: 50%;
+  width: 350px;
+  height: 175px;
+  background-color: #fff;
+  transform: translate(-50%, -50%);
+
+  opacity: 1;
+  z-index: 101;
+}
+
+.askDelete {
+  font-size: 24px;
+  line-height: 17px;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+.deleteBtn {
+  padding: 19px 51px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #fff;
+  background-color: var(--red);
+  cursor: pointer;
+  line-height: 17px;
+}
+
+.cancelBtn {
+  color: #333;
+  border-bottom: 1px solid #333;
+}

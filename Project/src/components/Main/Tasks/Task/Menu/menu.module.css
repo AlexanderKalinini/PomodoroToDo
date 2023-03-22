@@ -1,0 +1,45 @@
+.menuButtons {
+  width: 165px;
+  padding-top: 8px;
+  background-color: #fff;
+  position: absolute;
+  top: 46px;
+  left: 274px;
+  border: 1px solid var(--greyC4);
+  z-index: 10;
+}
+
+.menuButtons::after {
+  content: "";
+  position: absolute;
+  z-index: 10;
+  top: -6px;
+  left: calc(100% / 2 - 4px);
+  width: 10px;
+  height: 10px;
+  transform: rotate(45deg);
+  border-top: 1px solid var(--greyC4);
+  border-left: 1px solid var(--greyC4);
+  background-color: #fff;
+}
+.menuBtn {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 9px 0px 9px 16px;
+  line-height: 17px;
+  font-weight: 300;
+  color: #999;
+}
+
+.menuBtn:hover {
+  background-color: var(--greyF4);
+}
+
+.buttonImg {
+  margin-right: 8px;
+}
+
+.isVisible {
+  display: none;
+}

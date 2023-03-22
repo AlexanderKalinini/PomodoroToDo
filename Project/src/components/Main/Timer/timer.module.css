@@ -35,6 +35,10 @@
   margin-right: 25px;
 }
 
+.btnMenu {
+  position: relative;
+}
+
 .btn {
   padding: 19px 51px;
   text-align: center;

@@ -1,12 +1,22 @@
 .list {
+  position: relative;
   display: flex;
-  overflow: hidden;
   min-height: 55px;
   width: 370px;
+
   justify-content: space-between;
   align-items: center;
-
   border-bottom: 1px solid var(--greyE4);
+}
+
+.taskName {
+  display: flex;
+  align-items: center;
+  padding: 19px 0;
+}
+
+.textaria:focus {
+  outline: none;
 }
 
 .list:nth-child(1) {
@@ -14,6 +24,7 @@
 }
 
 .btn {
+  overflow: visible;
   border: none;
   background-color: inherit;
 }
@@ -27,4 +38,19 @@
   border: 1px solid var(--greyC4);
   border-radius: 50%;
   margin-right: 10px;
+}
+
+.textTask {
+  width: 200px;
+}
+.textaria {
+  width: 200px;
+  height: 25px;
+  line-height: 17px;
+  padding-top: 4px;
+  overflow-y: auto;
+}
+
+.textaria::selection {
+  background-color: var(--greyF4);
 }

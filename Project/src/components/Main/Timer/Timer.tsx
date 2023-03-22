@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./timer.module.css";
 import Image from "next/image";
 
