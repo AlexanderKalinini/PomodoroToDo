@@ -19,6 +19,7 @@ export function Timer() {
   const [numTomat, setNumTomat] = useState(1);
   const [doneTomat, setDoneTomat] = useState(0);
   const [rest, setRest] = useState(false);
+  const [numTask, setNumTask] = useState(1);
   const dispatch = useDispatch();
   console.log(rest);
 
@@ -30,6 +31,7 @@ export function Timer() {
       setNumTomat(1);
       setRest(false);
       setSeconds(3);
+      setNumTask(1);
       return;
     }
 
@@ -41,15 +43,19 @@ export function Timer() {
       setSeconds(3);
       setDoneTomat(0);
       setRest(false);
+      setNumTask((prev) => prev + 1);
     }
 
     if (seconds === 0) {
-      if (doneTomat > 0) {
+      if (!rest) {
         setSeconds(5);
         setRest(true);
+        return;
       }
 
-      if (rest || (!rest && doneTomat == 0)) {
+      if (rest) {
+        clearInterval(intervalId);
+        setIntervalId(undefined);
         setNumTomat((prev) => prev + 1);
         setSeconds(3);
         dispatch(decrementTomat(0));
@@ -146,8 +152,9 @@ export function Timer() {
         <div style={{ marginBottom: "32px" }}>
           {" "}
           <span style={{ color: "#999" }}>
-            {" "}
-            {tasks[0] ? "Задача 1 " + tasks[0]?.task : "Нет задач"}
+            {tasks[0]
+              ? "Задача " + numTask + " " + tasks[0]?.task
+              : "Нет задач"}
           </span>{" "}
         </div>
         <div>
