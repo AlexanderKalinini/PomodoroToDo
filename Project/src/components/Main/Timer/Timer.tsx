@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styles from "./timer.module.css";
-import Image from "next/image";
-
 import { useGetTasksAfterRender } from "../../../../hooks/useGetTasks";
 import classNames from "classnames";
 import { useDispatch } from "react-redux";
@@ -24,16 +22,17 @@ export function Timer() {
   console.log(rest);
 
   useEffect(() => {
-    if (!tasks[0]) {
-      clearInterval(intervalId);
-      setIntervalId(undefined);
-      setDoneTomat(0);
-      setNumTomat(1);
-      setRest(false);
-      setSeconds(3);
-      setNumTask(1);
-      return;
-    }
+    if (tasks.length)
+      if (!tasks[0]) {
+        clearInterval(intervalId);
+        setIntervalId(undefined);
+        setDoneTomat(0);
+        setNumTomat(1);
+        setRest(false);
+        setSeconds(3);
+        setNumTask(1);
+        return;
+      }
 
     if (numTomat > tasks[0]?.numTomatos + doneTomat) {
       clearInterval(intervalId);
