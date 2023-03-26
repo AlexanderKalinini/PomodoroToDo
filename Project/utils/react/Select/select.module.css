@@ -1,0 +1,48 @@
+.container {
+  background-color: var(--greyF4);
+  font-size: 16px;
+  line-height: 17px;
+}
+
+.placeholder {
+  position: relative;
+  width: 370px;
+  height: 55px;
+  padding: 19px 0 19px 15px;
+  text-align: start;
+  position: relative;
+}
+
+.placeholder::after {
+  content: "";
+  position: absolute;
+  right: 17px;
+  top: 35%;
+  height: 10px;
+  width: 10px;
+  border-left: 2px solid var(--red0F);
+  border-top: 2px solid var(--red0F);
+  transform: rotate(225deg);
+}
+
+.placeholder.opend::after {
+  top: 45%;
+  transform: rotate(45deg);
+}
+
+.list {
+  position: absolute;
+  width: 370px;
+  background-color: var(--greyF4);
+}
+
+.item {
+  padding: 19px 0 19px 15px;
+
+  text-align: start;
+  position: relative;
+  font-size: 16px;
+  line-height: 17px;
+  border-top: 1px solid var(--greyDE);
+  background-color: inherit;
+}

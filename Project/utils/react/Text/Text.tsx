@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React from "react";
-import styles from "./text.css";
+import styles from "./text.module.css";
 
 export enum EColor {
   black = "black",

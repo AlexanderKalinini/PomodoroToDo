@@ -1,12 +1,9 @@
 import React from "react";
 import classNames from "classnames";
-import styles from "./break.css"
-
+import styles from "./break.module.css";
 
 type TBreakSize = 4 | 8 | 12 | 16 | 20;
 type TDisplays = "mobile" | "tablet" | "desktop";
-
-
 
 interface IBreakProps {
   size: TBreakSize;
