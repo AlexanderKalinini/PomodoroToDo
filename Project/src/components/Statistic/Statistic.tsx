@@ -35,16 +35,8 @@ export function Statistic() {
     "Воскресенье",
   ];
 
-  const { date, tomatoes, pauseTime, totalTime, stops, focusTime } = week[index]
-    ? week[index]
-    : {
-        date: "",
-        tomatoes: 0,
-        pauseTime: 0,
-        totalTime: 0,
-        stops: 0,
-        focusTime: 0,
-      };
+  const { date, tomatoes, pauseTime, totalTime, stops, focusTime } =
+    week[index];
 
   const heightColumn = (totalTime: number | undefined) => {
     if (!totalTime) return "5px";
