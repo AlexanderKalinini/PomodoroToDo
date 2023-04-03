@@ -1,6 +1,8 @@
+import { Statistic } from "@/components/Statistic";
 import { configureStore } from "@reduxjs/toolkit";
 
-import tasksReducer from "./tasksSlice";
+import tasksSlice from "./tasksSlice";
+import statSlice from "./statSlice";
 import {
   loadFromLocalStorage,
   saveToLocalStorage,
@@ -8,7 +10,8 @@ import {
 
 const store = configureStore({
   reducer: {
-    tasks: tasksReducer,
+    tasks: tasksSlice,
+    statistic: statSlice,
   },
   preloadedState: loadFromLocalStorage(),
 });

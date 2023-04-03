@@ -13,9 +13,17 @@
   background-color: var(--red);
 }
 
+.backgroundColorGreen {
+  background-color: var(--green);
+}
+
 .colorBorderRed {
   color: var(--red);
   outline-color: var(--red);
+}
+
+.colorGreen {
+  color: var(--green);
 }
 
 .timerHead_span {

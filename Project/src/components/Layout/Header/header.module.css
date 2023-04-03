@@ -1,4 +1,6 @@
 .header {
+  max-width: 1440px;
+  margin: 0 auto;
   display: grid;
   padding: 0 80px;
   margin-bottom: 100px;
@@ -32,6 +34,10 @@
 .stat {
   display: flex;
   font-size: 16px;
+}
+
+.stat:hover {
+  color: var(--red0F);
 }
 
 @media (max-width: 900px) {

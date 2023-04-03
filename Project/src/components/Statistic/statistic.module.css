@@ -1,5 +1,7 @@
 .statistic {
   padding: 0 80px 100px 80px;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .head {
@@ -11,7 +13,7 @@
 
 .select {
   width: 370px;
-  height: 55px;
+  min-height: 55px;
   border: none;
   background-color: var(--greyF4);
   text-align: start;
@@ -31,27 +33,193 @@
 }
 
 .body {
+  width: 100%;
   display: grid;
-  grid-template-rows: auto auto;
-  grid-template-columns: auto auto;
-  column-gap: 32px;
-  row-gap: 32px;
+  grid-template-columns: 23% 74%;
+  margin-bottom: 32px;
+  justify-content: space-between;
 }
 
 .schedule {
-  height: 420px;
-  width: 952px;
+  width: 100%;
+  min-height: 472px;
   outline: 1px solid red;
+  background-color: var(--greyF4);
 }
 
 .day {
+  padding: 25px;
   height: 260px;
-  width: 296px;
+  width: 100%;
   outline: 1px solid red;
+  grid-row: 1;
+  grid-column: 1;
+  background-color: var(--greyF4);
 }
-.numTomatos {
-  height: 179px;
-  width: 296px;
 
+.dayOfWeek {
+  display: block;
+  margin-bottom: 14px;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 33px;
+}
+
+.dayMessage {
+  font-size: 16px;
+  line-height: 28px;
+}
+
+.numTomatos {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: 32px;
+  height: 179px;
   outline: 1px solid red;
+  grid-row: 1;
+  grid-column: 1;
+  align-self: end;
+  background-color: var(--greyF4);
+}
+
+.tomatoes {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 33px;
+  color: #999;
+}
+
+.tomText {
+  padding: 9px;
+  display: block;
+  width: 100%;
+  height: 51px;
+  background-color: var(--red);
+  text-align: center;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 33px;
+  color: #fff;
+}
+
+.daysOfWeek {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 11%;
+  padding: 11px 20% 11px 8%;
+  font-size: 24px;
+  line-height: 29px;
+  color: #999;
+  background-color: var(--greyEC);
+}
+
+.column {
+  position: absolute;
+  bottom: 0;
+  cursor: pointer;
+  width: 77px;
+  height: 5px;
+  background-color: var(--greyC4);
+}
+
+.column:hover {
+  background-color: var(--rose);
+}
+
+.column:focus {
+  background-color: var(--red);
+}
+
+.columnRose {
+  background-color: var(--light-rose);
+}
+
+.columnRed {
+  background-color: var(--red);
+}
+
+.colorRed {
+  color: var(--red);
+}
+
+.sheduleLayout {
+  height: 89%;
+  background-color: var(--greyF4);
+  padding: 68px 20px 68px 0;
+}
+
+.footer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 32px;
+}
+
+.footerStatistic {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 179px;
+  padding: 25px 35px 25px 25px;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 33px;
+}
+
+.background1 {
+  background: #ffdda9 url("/circles.svg") no-repeat center right 35px;
+}
+.background2 {
+  background: #dfdcfe url("/clock.svg") no-repeat center right 35px;
+}
+
+.background3 {
+  background: #c5f1ff url("/circles-line.svg") no-repeat center right 35px;
+}
+
+.background11 {
+  background: var(--greyF4) url("/circles2.svg") no-repeat center right 35px;
+}
+.background22 {
+  background: var(--greyF4) url("/clock2.svg") no-repeat center right 35px;
+}
+
+.background33 {
+  background: var(--greyF4) url("/circles-line2.svg") no-repeat center right
+    35px;
+}
+
+.time {
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 76px;
+  color: #333;
+}
+
+.sheduleLayout {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #333;
+  font-size: 12px;
+  line-height: 33px;
+}
+
+.lines {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.line {
+  height: 1px;
+  width: 89%;
+  background-color: #333;
 }

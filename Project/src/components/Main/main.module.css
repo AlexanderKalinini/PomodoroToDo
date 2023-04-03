@@ -1,4 +1,7 @@
 .main {
+  max-width: 1440px;
+  margin: 0 auto;
+
   display: grid;
   padding: 0 80px;
   grid-template-columns: 531px minmax(200px, 733px);

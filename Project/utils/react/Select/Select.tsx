@@ -11,10 +11,15 @@ export function Select({ options }: ISelect) {
   const generateRandomeString = () =>
     Math.random().toString(36).substring(2, 15);
 
+  const handleClick = (value: string) => {
+    setPlaceHolder(value);
+    setIsOpen(!isOpen);
+  };
+
   const optionsList = options.map((el: { value: string }) => (
     <li
       hidden={placeHolder === el.value}
-      onClick={() => setPlaceHolder(el.value)}
+      onClick={() => handleClick(el.value)}
       key={generateRandomeString()}
       className={styles.item}
     >

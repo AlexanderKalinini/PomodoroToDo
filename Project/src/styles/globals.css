@@ -6,6 +6,7 @@
   --greyC4: #c4c4c4;
   --greyE4: #e4e4e4;
   --greyDE: #dedede;
+  --greyEC: #ececec;
   --red0F: #b7280f;
 
   --rose: #ee735d;
@@ -246,6 +247,7 @@ textarea {
 
 button {
   cursor: pointer;
+  color: inherit;
 }
 
 /**

@@ -7,6 +7,12 @@ import {
   decrementTomat,
   deleteTask,
 } from "../../../../Store/Redux-Store/tasksSlice";
+import {
+  addFocuseTime,
+  addPauseTime,
+  addStops,
+  addTomatoes,
+} from "../../../../Store/Redux-Store/statSlice";
 
 export function Timer() {
   const [tasks]: { task: string; numTomatos: number }[][] =
@@ -19,20 +25,31 @@ export function Timer() {
   const [rest, setRest] = useState(false);
   const [numTask, setNumTask] = useState(1);
   const dispatch = useDispatch();
-  console.log(rest);
+  const [pausedTime, setPauseTime] = useState(0);
+  const [focusTime, setFocusTime] = useState(0);
 
   useEffect(() => {
-    if (tasks.length)
-      if (!tasks[0]) {
-        clearInterval(intervalId);
-        setIntervalId(undefined);
-        setDoneTomat(0);
-        setNumTomat(1);
-        setRest(false);
-        setSeconds(3);
-        setNumTask(1);
-        return;
-      }
+    if (tasks.length === 0) {
+      clearInterval(intervalId);
+      setIntervalId(undefined);
+      setDoneTomat(0);
+      setNumTomat(1);
+      setRest(false);
+      setSeconds(3);
+      setNumTask(1);
+      return;
+    }
+
+    if (!tasks[0]) {
+      clearInterval(intervalId);
+      setIntervalId(undefined);
+      setDoneTomat(0);
+      setNumTomat(1);
+      setRest(false);
+      setSeconds(3);
+      setNumTask(1);
+      return;
+    }
 
     if (numTomat > tasks[0]?.numTomatos + doneTomat) {
       clearInterval(intervalId);
@@ -49,6 +66,8 @@ export function Timer() {
       if (!rest) {
         setSeconds(5);
         setRest(true);
+        dispatch(addFocuseTime(focusTime));
+        setFocusTime(0);
         return;
       }
 
@@ -58,11 +77,21 @@ export function Timer() {
         setNumTomat((prev) => prev + 1);
         setSeconds(3);
         dispatch(decrementTomat(0));
+        dispatch(addTomatoes());
         setDoneTomat((prev) => prev + 1);
         setRest(false);
       }
     }
-  }, [seconds, numTomat, tasks, dispatch, doneTomat, intervalId, rest]);
+  }, [
+    seconds,
+    numTomat,
+    tasks,
+    dispatch,
+    doneTomat,
+    intervalId,
+    rest,
+    focusTime,
+  ]);
 
   function timer() {
     setSeconds((prev) => prev - 1);
@@ -71,6 +100,7 @@ export function Timer() {
   function handleClickStart() {
     if (intervalId || !tasks[0]) return;
     setIntervalId(setInterval(timer, 1000));
+    setFocusTime(Date.now());
   }
 
   function handleClickStop() {
@@ -79,45 +109,67 @@ export function Timer() {
     setSeconds(3);
     setPause(false);
     setRest(false);
+    dispatch(addStops());
+    dispatch(addFocuseTime(focusTime));
+    setFocusTime(0);
   }
 
   function handleClickPause() {
     clearInterval(intervalId);
     setIntervalId(setInterval(() => {}));
     setPause(true);
+    dispatch(addStops());
+    setPauseTime(Date.now());
+    dispatch(addFocuseTime(focusTime));
+    setFocusTime(0);
   }
 
   function handleClickContinue() {
     setIntervalId(setInterval(timer, 1000));
     setPause(false);
+    dispatch(addPauseTime(pausedTime));
+    if (!rest) {
+      setPauseTime(0);
+      setFocusTime(Date.now());
+    }
   }
 
   function handleClickDone() {
     setIntervalId(undefined);
     setSeconds(3);
     setPause(false);
+    setRest(false);
     dispatch(decrementTomat(0));
     setDoneTomat((prev) => prev + 1);
     setNumTomat((prev) => prev + 1);
+    dispatch(addTomatoes());
+    dispatch(addPauseTime(pausedTime));
+    setPauseTime(0);
   }
 
   function handleClickSkip() {
     setRest(true);
     setSeconds(0);
     setPause(false);
+    dispatch(addPauseTime(pausedTime));
+    setPauseTime(0);
   }
 
   const timerHead = classNames(styles.timerHead, {
     [styles.backgroundColorRed]: Boolean(intervalId),
+    [styles.backgroundColorGreen]: rest,
   });
 
   const dashboard = classNames(styles.dashboard, {
-    [styles.colorBorderRed]: Boolean(intervalId),
+    [styles.colorBorderRed]: Boolean(intervalId) && !paused,
+    [styles.colorGreen]: rest && !paused,
   });
 
   const btnStop = classNames(styles.btnStop, {
     [styles.btnStopRed]: Boolean(intervalId),
   });
+
+  const task = <span style={{ color: "#333" }}>{tasks[0]?.task}</span>;
 
   return (
     <div className={styles.timer}>
@@ -149,12 +201,16 @@ export function Timer() {
           </button>{" "}
         </div>
         <div style={{ marginBottom: "32px" }}>
-          {" "}
           <span style={{ color: "#999" }}>
-            {tasks[0]
-              ? "Задача " + numTask + " " + tasks[0]?.task
-              : "Нет задач"}
-          </span>{" "}
+            {tasks[0] ? (
+              <span>
+                {"Задача " + numTask + " - "}
+                {task}
+              </span>
+            ) : (
+              "Нет задач"
+            )}{" "}
+          </span>
         </div>
         <div>
           {!Boolean(intervalId) ? (
@@ -176,10 +232,18 @@ export function Timer() {
                 Пропустить
               </button>
             ) : (
-              <button onClick={handleClickStop} className={btnStop}>
+              <button
+                disabled={!intervalId}
+                onClick={handleClickStop}
+                className={btnStop}
+              >
                 Стоп
               </button>
             )
+          ) : rest ? (
+            <button onClick={handleClickSkip} className={btnStop}>
+              Пропустить
+            </button>
           ) : (
             <button onClick={handleClickDone} className={btnStop}>
               Сделано
