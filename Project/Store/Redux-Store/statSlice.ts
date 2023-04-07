@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { log } from "console";
 
 export interface IStat {
   stat: {
@@ -29,10 +30,15 @@ const statSlice = createSlice({
         date: action.payload,
         tomatoes: 0,
         pauseTime: 0,
-        totalTime: 0,
+        totalTime: 1,
         stops: 0,
         focusTime: 0,
       });
+    },
+    removeDate(state) {
+      if (state.stat.length > 21) {
+        state.stat.shift();
+      }
     },
     addTotalTime(state, milliseconds: PayloadAction<number>) {
       state.stat[state.stat.length - 1].totalTime += milliseconds.payload;
@@ -63,6 +69,7 @@ export const {
   addStops,
   addPauseTime,
   addFocuseTime,
+  removeDate,
 } = statSlice.actions;
 
 export default statSlice.reducer;

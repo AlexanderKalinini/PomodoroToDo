@@ -1,12 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { Select } from "../../../utils/react/Select";
 import Image from "next/image";
 import styles from "./statistic.module.css";
 
 import { useStartAppStatistic } from "../../../hooks/useStartAppStatistic";
-import { useSelector } from "react-redux";
-import store, { RootState } from "../../../Store/Redux-Store/store";
-import { IStat } from "../../../Store/Redux-Store/statSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../Store/Redux-Store/store";
+import { IStat, removeDate } from "../../../Store/Redux-Store/statSlice";
 import { getHoursMinutes } from "../../../utils/ts/getHoursMinutes";
 import classNames from "classnames";
 
@@ -24,6 +25,7 @@ export function Statistic() {
   const { stat } = useSelector<RootState, IStat>((state) => state.statistic);
   const [week, setWeek] = useState<TStat[]>([]);
   const [index, setIndex] = useState(0);
+  const dispatch = useDispatch();
 
   const daysOfWeek = [
     "Понедельник",
@@ -35,17 +37,26 @@ export function Statistic() {
     "Воскресенье",
   ];
 
-  const { date, tomatoes, pauseTime, totalTime, stops, focusTime } =
-    week[index];
+  const { date, tomatoes, pauseTime, totalTime, stops, focusTime } = week[index]
+    ? week[index]
+    : {
+        date: "",
+        tomatoes: 0,
+        pauseTime: 0,
+        totalTime: 1,
+        stops: 0,
+        focusTime: 0,
+      };
 
   const heightColumn = (totalTime: number | undefined) => {
     if (!totalTime) return "5px";
     const percent = (totalTime / 12300000) * 159;
-    return `${percent > 100 ? 100 : percent}%`;
+    return `${percent > 159 ? 100 : percent}%`;
   };
 
   useEffect(() => {
     setWeek(getOneWeekStat(0));
+    dispatch(removeDate());
   }, []);
 
   function getOneWeekStat(numWeek: number) {
@@ -57,7 +68,6 @@ export function Statistic() {
     let numSun = 0;
 
     for (let daysAgo = 0; daysAgo < 21; daysAgo++) {
-      console.log(numSun);
       const findDate = new Date(Date.now() - daysAgo * millisecondsInDay)
         .toString()
         .split(" ")
@@ -117,11 +127,9 @@ export function Statistic() {
     }
     if ((event.target as HTMLElement).innerHTML === "Прошлая неделя") {
       setWeek(getOneWeekStat(-1));
-      console.log("Прошлая неделя");
     }
     if ((event.target as HTMLElement).innerHTML === "2 недели назад") {
       setWeek(getOneWeekStat(-2));
-      console.log("2 недели назад");
     }
   }
 
@@ -150,7 +158,7 @@ export function Statistic() {
         <div className={styles.day}>
           <span className={styles.dayOfWeek}>{daysOfWeek[index]}</span>
           <p className={styles.dayMessage}>
-            {totalTime ? (
+            {date ? (
               <span>
                 {" "}
                 Вы работали над задачами{" "}

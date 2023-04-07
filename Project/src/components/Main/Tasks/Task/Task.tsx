@@ -41,7 +41,6 @@ export function Task({ text, numTomatos, index }: ITask) {
         !event.target.closest("#task-menu-btn") &&
         !event.target.closest("#dialog-root")
       ) {
-        console.log("CloseMenu");
         setOpenMenu(false);
         openCloseState.length = 0;
       }

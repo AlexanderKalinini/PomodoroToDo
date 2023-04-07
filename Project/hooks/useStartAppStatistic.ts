@@ -18,7 +18,7 @@ export function useStartAppStatistic() {
 
   useEffect(() => {
     const startDate = Date.now();
-    console.log("mount", startDate);
+
     const handleBeforeUnload = () => {
       dispatch(addTotalTime(Date.now() - startDate));
     };
@@ -26,7 +26,7 @@ export function useStartAppStatistic() {
     window.addEventListener("beforeunload", handleBeforeUnload);
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
-      console.log("unmount", startDate);
+
       dispatch(addTotalTime(Date.now() - startDate));
     };
   }, [date, dispatch]);
