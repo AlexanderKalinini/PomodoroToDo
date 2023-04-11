@@ -1,26 +1,24 @@
-import React, { BaseSyntheticEvent, useEffect, useRef, useState } from "react";
-import styles from "./task.module.css";
 import Image from "next/image";
-import { Menu } from "./Menu";
-import { useDispatch, useSelector } from "react-redux";
+import React, { BaseSyntheticEvent, useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import {
-  decrementTomat,
+  decrementTomato,
   editTask,
-  incrementTomat,
-  openTaskMenu,
+  incrementTomato,
 } from "../../../../../Store/Redux-Store/tasksSlice";
-import { RootState } from "../../../../../Store/Redux-Store/store";
+import { Menu } from "./Menu";
+import styles from "./task.module.css";
 
 interface ITask {
   text: string;
   key: string;
-  numTomatos: number;
+  numTomatoes: number;
   index: number;
 }
 
 const openCloseState: boolean[] = [];
 
-export function Task({ text, numTomatos, index }: ITask) {
+export function Task({ text, numTomatoes, index }: ITask) {
   const [edited, setEdit] = useState(false);
   const [value, setValue] = useState(text);
   const [openMenu, setOpenMenu] = useState(
@@ -63,12 +61,12 @@ export function Task({ text, numTomatos, index }: ITask) {
       case "increment":
         setOpenMenu(true);
         openCloseState[index] = openMenu;
-        dispatch(incrementTomat(index));
+        dispatch(incrementTomato(index));
 
         break;
       case "decrement":
         openCloseState[index] = openMenu;
-        dispatch(decrementTomat(index));
+        dispatch(decrementTomato(index));
         break;
     }
   }
@@ -87,7 +85,7 @@ export function Task({ text, numTomatos, index }: ITask) {
   return (
     <li onClick={handleClickEditTask} className={styles.list}>
       <div className={styles.taskName}>
-        <span className={styles.numTomatos}>{numTomatos}</span>
+        <span className={styles.numTomatoes}>{numTomatoes}</span>
         {!edited ? (
           <p className={styles.textTask}>{text}</p>
         ) : (
@@ -110,7 +108,7 @@ export function Task({ text, numTomatos, index }: ITask) {
       >
         <Image src="/menuButton.svg" alt="button" width={26} height={6} />
       </button>
-      {openMenu && <Menu numTomatos={numTomatos} index={index} />}
+      {openMenu && <Menu numTomatoes={numTomatoes} index={index} />}
     </li>
   );
 }

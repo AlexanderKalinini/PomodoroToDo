@@ -6,5 +6,5 @@ export function getHoursMinutes(milliseconds: number): string {
     hours === 1 ? " час" : 1 < hours && hours < 5 ? " часа " : " часов "
   }`;
 
-  return `${hours > 0 ? hour : ""} ${minutes} минут`;
+  return `${hours > 0 ? hour : ""} ${minutes} м`;
 }

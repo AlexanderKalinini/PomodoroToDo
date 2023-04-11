@@ -1,27 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { Select } from "../../../utils/react/Select";
-import Image from "next/image";
 import styles from "./statistic.module.css";
 
-import { useStartAppStatistic } from "../../../hooks/useStartAppStatistic";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../Store/Redux-Store/store";
-import { IStat, removeDate } from "../../../Store/Redux-Store/statSlice";
-import { getHoursMinutes } from "../../../utils/ts/getHoursMinutes";
 import classNames from "classnames";
+import { useDispatch, useSelector } from "react-redux";
+import { IStat, removeDate } from "../../../Store/Redux-Store/statSlice";
+import { RootState } from "../../../Store/Redux-Store/store";
 
-type TStat = {
+import { getHoursMinutes } from "../../../utils/ts/getHoursMinutes";
+import { StatisticFooter } from "./StatisticFooter";
+
+export type TStat = {
   date: string;
   tomatoes: number;
   pauseTime: number;
-  totalTime: number;
   stops: number;
   focusTime: number;
 };
 
 export function Statistic() {
-  useStartAppStatistic();
   const { stat } = useSelector<RootState, IStat>((state) => state.statistic);
   const [week, setWeek] = useState<TStat[]>([]);
   const [index, setIndex] = useState(0);
@@ -37,13 +36,13 @@ export function Statistic() {
     "Воскресенье",
   ];
 
-  const { date, tomatoes, pauseTime, totalTime, stops, focusTime } = week[index]
+  const { date, tomatoes, pauseTime, stops, focusTime } = week[index]
     ? week[index]
     : {
         date: "",
         tomatoes: 0,
         pauseTime: 0,
-        totalTime: 1,
+
         stops: 0,
         focusTime: 0,
       };
@@ -147,10 +146,10 @@ export function Statistic() {
       <div onClick={handleClickSelect} className={styles.head}>
         <h1 className={styles.title}>Ваша активность</h1>
         <Select
-          options={[
-            { value: "Эта неделя" },
-            { value: "Прошлая неделя" },
-            { value: "2 недели назад" },
+          list={[
+            { text: "Эта неделя" },
+            { text: "Прошлая неделя" },
+            { text: "2 недели назад" },
           ]}
         />
       </div>
@@ -163,7 +162,7 @@ export function Statistic() {
                 {" "}
                 Вы работали над задачами{" "}
                 <span style={{ color: "#DC3E22" }}>
-                  {getHoursMinutes(totalTime)}
+                  {getHoursMinutes(pauseTime + focusTime)}
                 </span>{" "}
               </span>
             ) : (
@@ -172,7 +171,7 @@ export function Statistic() {
           </p>
         </div>
         {tomatoes ? (
-          <div className={styles.numTomatos}>
+          <div className={styles.numTomatoes}>
             <div className={styles.tomatoes}>
               <Image
                 src="/tomato 1.svg"
@@ -186,9 +185,9 @@ export function Statistic() {
             <span className={styles.tomText}>{tomatoes} помидора</span>
           </div>
         ) : (
-          <div className={styles.numTomatos}>
+          <div className={styles.numTomatoes}>
             <Image
-              src="/smiletomato.svg"
+              src="/smileTomato.svg"
               alt="image tomato"
               width={115}
               height={115}
@@ -197,7 +196,7 @@ export function Statistic() {
         )}
 
         <div className={styles.schedule}>
-          <div className={styles.sheduleLayout}>
+          <div className={styles.scheduleLayout}>
             <div className={styles.lines}>
               <div className={styles.line}></div>
               <span style={{ width: 57 }}>1 ч 40 мин</span>
@@ -216,37 +215,58 @@ export function Statistic() {
             </div>
             <div
               onClick={() => setIndex(0)}
-              style={{ height: heightColumn(week[0]?.totalTime), left: "6.5%" }}
+              style={{
+                height: heightColumn(week[0]?.focusTime + week[0]?.pauseTime),
+                left: "6.5%",
+              }}
               className={columnStyle(0)}
             ></div>
             <div
               onClick={() => setIndex(1)}
-              style={{ height: heightColumn(week[1]?.totalTime), left: "18%" }}
+              style={{
+                height: heightColumn(week[1]?.focusTime + week[1]?.pauseTime),
+                left: "18%",
+              }}
               className={columnStyle(1)}
             ></div>
             <div
               onClick={() => setIndex(2)}
-              style={{ height: heightColumn(week[2]?.totalTime), left: "29%" }}
+              style={{
+                height: heightColumn(week[2]?.focusTime + week[2]?.pauseTime),
+                left: "29%",
+              }}
               className={columnStyle(2)}
             ></div>
             <div
               onClick={() => setIndex(3)}
-              style={{ height: heightColumn(week[3]?.totalTime), left: "41%" }}
+              style={{
+                height: heightColumn(week[3]?.focusTime + week[3]?.pauseTime),
+                left: "41%",
+              }}
               className={columnStyle(3)}
             ></div>
             <div
               onClick={() => setIndex(4)}
-              style={{ height: heightColumn(week[4]?.totalTime), left: "52%" }}
+              style={{
+                height: heightColumn(week[4]?.focusTime + week[4]?.pauseTime),
+                left: "52%",
+              }}
               className={columnStyle(4)}
             ></div>
             <div
               onClick={() => setIndex(5)}
-              style={{ height: heightColumn(week[5]?.totalTime), left: "64%" }}
+              style={{
+                height: heightColumn(week[5]?.focusTime + week[5]?.pauseTime),
+                left: "64%",
+              }}
               className={columnStyle(5)}
             ></div>
             <div
               onClick={() => setIndex(6)}
-              style={{ height: heightColumn(week[6]?.totalTime), left: "76%" }}
+              style={{
+                height: heightColumn(week[6]?.focusTime + week[6]?.pauseTime),
+                left: "76%",
+              }}
               className={columnStyle(6)}
             ></div>
           </div>
@@ -303,34 +323,17 @@ export function Statistic() {
           </div>
         </div>
       </div>
-      <div className={styles.footer}>
-        <div
-          className={`${styles.footerStatistic}  ${
-            week[index] ? styles.background1 : styles.background11
-          }`}
-        >
-          <span>Фокус</span>
-          <span className={styles.time}>
-            {date ? `${Math.round((focusTime / totalTime) * 100)}%` : "0%"}
-          </span>
-        </div>
-        <div
-          className={`${styles.footerStatistic}  ${
-            week[index] ? styles.background2 : styles.background22
-          }`}
-        >
-          <span>Время на паузе</span>
-          <span className={styles.time}>{getHoursMinutes(pauseTime)}</span>
-        </div>
-        <div
-          className={`${styles.footerStatistic}  ${
-            week[index] ? styles.background3 : styles.background33
-          }`}
-        >
-          <span>Остановки</span>
-          <span className={styles.time}>{stops}</span>
-        </div>
-      </div>
+      <StatisticFooter
+        props={{
+          week: week,
+          date: date,
+          focusTime: focusTime,
+          pauseTime: pauseTime,
+          tomatoes: tomatoes,
+          stops: stops,
+          index: index,
+        }}
+      />
     </main>
   );
 }

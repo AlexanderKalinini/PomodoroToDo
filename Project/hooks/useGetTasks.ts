@@ -12,7 +12,7 @@ export function useGetTasksAfterRender() {
 
   return [tasks] as {
     task: string;
-    numTomatos: number;
+    numTomatoes: number;
     openCloseTaskMenu?: boolean;
   }[][];
 }

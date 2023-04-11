@@ -1,12 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { log } from "console";
 
 export interface IStat {
   stat: {
     date: string;
     tomatoes: number;
     pauseTime: number;
-    totalTime: number;
     stops: number;
     focusTime: number;
   }[];
@@ -30,7 +28,6 @@ const statSlice = createSlice({
         date: action.payload,
         tomatoes: 0,
         pauseTime: 0,
-        totalTime: 1,
         stops: 0,
         focusTime: 0,
       });
@@ -40,9 +37,7 @@ const statSlice = createSlice({
         state.stat.shift();
       }
     },
-    addTotalTime(state, milliseconds: PayloadAction<number>) {
-      state.stat[state.stat.length - 1].totalTime += milliseconds.payload;
-    },
+
     addTomatoes(state) {
       state.stat[state.stat.length - 1].tomatoes++;
     },
@@ -54,7 +49,7 @@ const statSlice = createSlice({
       state.stat[state.stat.length - 1].pauseTime +=
         new Date().getTime() - milliseconds.payload;
     },
-    addFocuseTime(state, milliseconds: PayloadAction<number>) {
+    addFocusTime(state, milliseconds: PayloadAction<number>) {
       if (!milliseconds.payload) return;
       state.stat[state.stat.length - 1].focusTime +=
         new Date().getTime() - milliseconds.payload;
@@ -64,11 +59,11 @@ const statSlice = createSlice({
 
 export const {
   addDate,
-  addTotalTime,
+
   addTomatoes,
   addStops,
   addPauseTime,
-  addFocuseTime,
+  addFocusTime: addFocusTime,
   removeDate,
 } = statSlice.actions;
 

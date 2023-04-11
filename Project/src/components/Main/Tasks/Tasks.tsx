@@ -1,10 +1,8 @@
 import React, { FormEvent, useState } from "react";
 import styles from "./tasks.module.css";
-
 import { addTask } from "../../../../Store/Redux-Store/tasksSlice";
 import { useDispatch } from "react-redux";
-
-import { generateRandomeString } from "../../../../utils/react/generateRandomeString";
+import { generateRandomString } from "../../../../utils/react/generateRandomString";
 import { Task } from "./Task/Task";
 import { useGetTasksAfterRender } from "../../../../hooks/useGetTasks";
 
@@ -24,7 +22,7 @@ export function Tasks() {
   function handleClick(event: FormEvent) {
     event.preventDefault();
     if (!value) return;
-    dispatch(addTask({ task: value, numTomatos: 1, openMenu: false }));
+    dispatch(addTask({ task: value, numTomatoes: 1, openMenu: false }));
     setValue("");
   }
 
@@ -69,13 +67,13 @@ export function Tasks() {
       <ul className={styles.tasks}>
         {" "}
         {tasks.map((obj: any, index: number) => {
-          minutes += obj.numTomatos * 25;
+          minutes += obj.numTomatoes * 25;
           hours = Math.floor(minutes / 60);
           return (
             <Task
               index={index}
-              numTomatos={obj.numTomatos}
-              key={generateRandomeString()}
+              numTomatoes={obj.numTomatoes}
+              key={generateRandomString()}
               text={obj.task}
             />
           );

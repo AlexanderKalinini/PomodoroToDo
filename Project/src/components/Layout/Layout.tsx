@@ -1,13 +1,6 @@
-import React, { ReactNode } from "react";
-import { Header } from "./Header";
-import styles from "./layout.module.css";
-import {} from "@next/font/google";
+import "@next/font/google";
+import { ReactNode } from "react";
 
 export function Layout({ children }: { children: ReactNode }) {
-  return (
-    <>
-      <Header />
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }

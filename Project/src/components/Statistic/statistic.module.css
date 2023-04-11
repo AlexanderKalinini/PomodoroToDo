@@ -70,7 +70,7 @@
   line-height: 28px;
 }
 
-.numTomatos {
+.numTomatoes {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -149,60 +149,13 @@
   color: var(--red);
 }
 
-.sheduleLayout {
+.scheduleLayout {
   height: 89%;
   background-color: var(--greyF4);
   padding: 68px 20px 68px 0;
 }
 
-.footer {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  column-gap: 32px;
-}
-
-.footerStatistic {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 179px;
-  padding: 25px 35px 25px 25px;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 33px;
-}
-
-.background1 {
-  background: #ffdda9 url("/circles.svg") no-repeat center right 35px;
-}
-.background2 {
-  background: #dfdcfe url("/clock.svg") no-repeat center right 35px;
-}
-
-.background3 {
-  background: #c5f1ff url("/circles-line.svg") no-repeat center right 35px;
-}
-
-.background11 {
-  background: var(--greyF4) url("/circles2.svg") no-repeat center right 35px;
-}
-.background22 {
-  background: var(--greyF4) url("/clock2.svg") no-repeat center right 35px;
-}
-
-.background33 {
-  background: var(--greyF4) url("/circles-line2.svg") no-repeat center right
-    35px;
-}
-
-.time {
-  font-weight: 400;
-  font-size: 64px;
-  line-height: 76px;
-  color: #333;
-}
-
-.sheduleLayout {
+.scheduleLayout {
   position: relative;
   display: flex;
   flex-direction: column;

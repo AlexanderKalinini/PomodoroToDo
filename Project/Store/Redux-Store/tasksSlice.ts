@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface ITasks {
-  tasks: { task: string; numTomatos: number; openCloseTaskMenu?: boolean }[];
+  tasks: { task: string; numTomatoes: number; openCloseTaskMenu?: boolean }[];
 }
 
 const initialState: ITasks = {
-  tasks: [{ task: "", numTomatos: 0 }],
+  tasks: [{ task: "", numTomatoes: 0 }],
 };
 
 const tasksSlice = createSlice({
@@ -16,7 +16,7 @@ const tasksSlice = createSlice({
       state,
       action: PayloadAction<{
         task: string;
-        numTomatos: number;
+        numTomatoes: number;
         openMenu?: boolean;
       }>
     ) => {
@@ -36,13 +36,13 @@ const tasksSlice = createSlice({
       state.tasks[action.payload.index].task = action.payload.task;
     },
 
-    incrementTomat: (state, index: PayloadAction<number>) => {
-      state.tasks[index.payload].numTomatos += 1;
+    incrementTomato: (state, index: PayloadAction<number>) => {
+      state.tasks[index.payload].numTomatoes += 1;
     },
 
-    decrementTomat: (state, index: PayloadAction<number>) => {
-      if (state.tasks[index.payload].numTomatos <= 0) return;
-      state.tasks[index.payload].numTomatos -= 1;
+    decrementTomato: (state, index: PayloadAction<number>) => {
+      if (state.tasks[index.payload].numTomatoes <= 0) return;
+      state.tasks[index.payload].numTomatoes -= 1;
     },
     openTaskMenu(
       state,
@@ -59,8 +59,8 @@ const tasksSlice = createSlice({
 export const {
   addTask,
   deleteTask,
-  incrementTomat,
-  decrementTomat,
+  incrementTomato: incrementTomato,
+  decrementTomato: decrementTomato,
   editTask,
   openTaskMenu,
 } = tasksSlice.actions;

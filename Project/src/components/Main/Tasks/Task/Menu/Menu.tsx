@@ -1,18 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
-import styles from "./menu.module.css";
 import Image from "next/image";
-import { useDispatch, useSelector } from "react-redux";
-import { ITasks } from "../../../../../../Store/Redux-Store/tasksSlice";
-import { RootState } from "../../../../../../Store/Redux-Store/store";
+import { useState } from "react";
+import styles from "./menu.module.css";
 
 import { DeleteTask } from "./DeleteTask";
 
 export function Menu({
   index,
-  numTomatos,
+  numTomatoes,
 }: {
   index: number;
-  numTomatos: number;
+  numTomatoes: number;
 }) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -33,7 +30,7 @@ export function Menu({
         Увеличить
       </button>
 
-      {numTomatos > 1 ? (
+      {numTomatoes > 1 ? (
         <button id="decrement" className={styles.menuBtn}>
           <Image
             className={styles.buttonImg}
@@ -72,10 +69,10 @@ export function Menu({
         {" "}
         <Image
           className={styles.buttonImg}
-          src="/busket.svg"
+          src="/basket.svg"
           width={15}
           height={15}
-          alt="busket"
+          alt="basket"
         />
         Удалить
       </button>

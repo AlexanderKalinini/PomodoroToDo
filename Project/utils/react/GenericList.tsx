@@ -1,5 +1,4 @@
-import React from "react";
-import { getAllJSDocTagsOfKind } from "typescript";
+import { generateRandomString } from "./generateRandomString";
 
 interface IItem {
   value: string;
@@ -23,32 +22,41 @@ export function MyList({ list }: IMyListProps) {
   );
 }
 
-interface IGItem {
-  id: string;
+export interface IGItem {
+  id?: string;
   text: string;
-  onClick: (id: string) => void;
-  className: string;
+  onClick?: (text: string) => void;
+  className?: string;
   As?: "a" | "li" | "button" | "div";
   href?: string;
 }
 
-interface IGenericListProps {
+export interface IGenericListProps {
   list: IGItem[];
 }
 
-export function GenericList({ list }: IGenericListProps) {
+export function GenericList({ list }: IGenericListProps, hidden: boolean) {
   return (
     <>
-      {list.map(({ As = "div", text, onClick, className, id, href }) => (
-        <As
-          className={className}
-          onClick={() => onClick(id)}
-          key={id}
-          href={href}
-        >
-          {text}
-        </As>
-      ))}
+      {list.map(
+        ({
+          As = "li",
+          text,
+          onClick = (text) => {},
+          className,
+          id = generateRandomString(),
+          href,
+        }) => (
+          <As
+            className={className}
+            onClick={() => onClick(text)}
+            key={id}
+            href={href}
+          >
+            {text}
+          </As>
+        )
+      )}
     </>
   );
 }

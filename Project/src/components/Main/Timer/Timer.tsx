@@ -4,24 +4,24 @@ import { useGetTasksAfterRender } from "../../../../hooks/useGetTasks";
 import classNames from "classnames";
 import { useDispatch } from "react-redux";
 import {
-  decrementTomat,
+  decrementTomato,
   deleteTask,
 } from "../../../../Store/Redux-Store/tasksSlice";
 import {
-  addFocuseTime,
+  addFocusTime,
   addPauseTime,
   addStops,
   addTomatoes,
 } from "../../../../Store/Redux-Store/statSlice";
 
 export function Timer() {
-  const [tasks]: { task: string; numTomatos: number }[][] =
+  const [tasks]: { task: string; numTomatoes: number }[][] =
     useGetTasksAfterRender();
   const [seconds, setSeconds] = useState(3);
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | undefined>();
   const [paused, setPause] = useState(false);
-  const [numTomat, setNumTomat] = useState(1);
-  const [doneTomat, setDoneTomat] = useState(0);
+  const [numTomato, setNumTomato] = useState(1);
+  const [doneTomato, setDoneTomato] = useState(0);
   const [rest, setRest] = useState(false);
   const [numTask, setNumTask] = useState(1);
   const dispatch = useDispatch();
@@ -32,8 +32,8 @@ export function Timer() {
     if (tasks.length === 0) {
       clearInterval(intervalId);
       setIntervalId(undefined);
-      setDoneTomat(0);
-      setNumTomat(1);
+      setDoneTomato(0);
+      setNumTomato(1);
       setRest(false);
       setSeconds(3);
       setNumTask(1);
@@ -43,21 +43,21 @@ export function Timer() {
     if (!tasks[0]) {
       clearInterval(intervalId);
       setIntervalId(undefined);
-      setDoneTomat(0);
-      setNumTomat(1);
+      setDoneTomato(0);
+      setNumTomato(1);
       setRest(false);
       setSeconds(3);
       setNumTask(1);
       return;
     }
 
-    if (numTomat > tasks[0]?.numTomatos + doneTomat) {
+    if (numTomato > tasks[0]?.numTomatoes + doneTomato) {
       clearInterval(intervalId);
       setIntervalId(undefined);
       dispatch(deleteTask(0));
-      setNumTomat(1);
+      setNumTomato(1);
       setSeconds(3);
-      setDoneTomat(0);
+      setDoneTomato(0);
       setRest(false);
       setNumTask((prev) => prev + 1);
     }
@@ -66,7 +66,7 @@ export function Timer() {
       if (!rest) {
         setSeconds(5);
         setRest(true);
-        dispatch(addFocuseTime(focusTime));
+        dispatch(addFocusTime(focusTime));
         setFocusTime(0);
         return;
       }
@@ -74,20 +74,20 @@ export function Timer() {
       if (rest) {
         clearInterval(intervalId);
         setIntervalId(undefined);
-        setNumTomat((prev) => prev + 1);
+        setNumTomato((prev) => prev + 1);
         setSeconds(3);
-        dispatch(decrementTomat(0));
+        dispatch(decrementTomato(0));
         dispatch(addTomatoes());
-        setDoneTomat((prev) => prev + 1);
+        setDoneTomato((prev) => prev + 1);
         setRest(false);
       }
     }
   }, [
     seconds,
-    numTomat,
+    numTomato,
     tasks,
     dispatch,
-    doneTomat,
+    doneTomato,
     intervalId,
     rest,
     focusTime,
@@ -110,7 +110,7 @@ export function Timer() {
     setPause(false);
     setRest(false);
     dispatch(addStops());
-    dispatch(addFocuseTime(focusTime));
+    dispatch(addFocusTime(focusTime));
     setFocusTime(0);
   }
 
@@ -120,7 +120,7 @@ export function Timer() {
     setPause(true);
     dispatch(addStops());
     setPauseTime(Date.now());
-    dispatch(addFocuseTime(focusTime));
+    dispatch(addFocusTime(focusTime));
     setFocusTime(0);
   }
 
@@ -139,9 +139,9 @@ export function Timer() {
     setSeconds(3);
     setPause(false);
     setRest(false);
-    dispatch(decrementTomat(0));
-    setDoneTomat((prev) => prev + 1);
-    setNumTomat((prev) => prev + 1);
+    dispatch(decrementTomato(0));
+    setDoneTomato((prev) => prev + 1);
+    setNumTomato((prev) => prev + 1);
     dispatch(addTomatoes());
     dispatch(addPauseTime(pausedTime));
     setPauseTime(0);
@@ -175,7 +175,7 @@ export function Timer() {
     <div className={styles.timer}>
       <div className={timerHead}>
         <span className={styles.timerHead_span}>{tasks && tasks[0]?.task}</span>
-        <span>Помидор {numTomat}</span>
+        <span>Помидор {numTomato}</span>
       </div>
       <div className={dashboard}>
         <div className={styles.timeBlock}>
