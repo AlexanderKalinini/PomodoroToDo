@@ -12,9 +12,14 @@ interface IStatisticFooter {
   index: number;
 }
 
-export function StatisticFooter({ props }: { props: IStatisticFooter }) {
-  const { week, pauseTime, stops, focusTime, index, date } = props;
-
+export function StatisticFooter({
+  week,
+  pauseTime,
+  stops,
+  focusTime,
+  index,
+  date,
+}: IStatisticFooter) {
   return (
     <div className={styles.footer}>
       <div
