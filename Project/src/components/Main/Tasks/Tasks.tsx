@@ -1,10 +1,11 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import styles from "./tasks.module.css";
 import { addTask } from "../../../../Store/Redux-Store/tasksSlice";
 import { useDispatch } from "react-redux";
 import { generateRandomString } from "../../../../utils/react/generateRandomString";
 import { Task } from "./Task/Task";
 import { useGetTasksAfterRender } from "../../../../hooks/useGetTasks";
+import { addDate } from "../../../../Store/Redux-Store/statSlice";
 
 export function Tasks() {
   const [tasks] = useGetTasksAfterRender();

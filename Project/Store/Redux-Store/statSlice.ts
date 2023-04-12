@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { log } from "console";
 
 export interface IStat {
   stat: {
@@ -19,6 +20,8 @@ const statSlice = createSlice({
   initialState: initialState,
   reducers: {
     addDate(state, action: PayloadAction<string>) {
+      console.log("Date");
+
       if (
         state.stat.length &&
         state.stat[state.stat.length - 1].date === action.payload

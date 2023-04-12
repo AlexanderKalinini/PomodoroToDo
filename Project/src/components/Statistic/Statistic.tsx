@@ -1,16 +1,14 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+import classNames from "classnames";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { Select } from "../../../utils/react/Select";
-import styles from "./statistic.module.css";
-
-import classNames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
 import { IStat, removeDate } from "../../../Store/Redux-Store/statSlice";
 import { RootState } from "../../../Store/Redux-Store/store";
-
-import { getHoursMinutes } from "../../../utils/ts/getHoursMinutes";
+import { Select } from "../../../utils/react/Select";
+import { getTimeHMS } from "../../../utils/ts/getHoursMinutes";
+import { getWeekStat } from "../../../utils/ts/getWeekStat";
 import { StatisticFooter } from "./StatisticFooter";
+import styles from "./statistic.module.css";
 
 export type TStat = {
   date: string;
@@ -21,10 +19,13 @@ export type TStat = {
 };
 
 export function Statistic() {
+  const dayOfWeek = new Date().getDay() ? new Date().getDay() - 1 : 6;
   const { stat } = useSelector<RootState, IStat>((state) => state.statistic);
   const [week, setWeek] = useState<TStat[]>([]);
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(dayOfWeek);
   const dispatch = useDispatch();
+  const [maxTime, setMaxTime] = useState(0);
+  console.log();
 
   const daysOfWeek = [
     "Понедельник",
@@ -42,108 +43,55 @@ export function Statistic() {
         date: "",
         tomatoes: 0,
         pauseTime: 0,
-
         stops: 0,
         focusTime: 0,
       };
 
-  const heightColumn = (totalTime: number | undefined) => {
-    if (!totalTime) return "5px";
-    const percent = (totalTime / 12300000) * 159;
-    return `${percent > 159 ? 100 : percent}%`;
-  };
-
   useEffect(() => {
-    setWeek(getOneWeekStat(0));
+    setWeek(getWeekStat(0, stat));
     dispatch(removeDate());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function getOneWeekStat(numWeek: number) {
-    const currentWeekDates: string[] = [];
-    const lastWeekDates: string[] = [];
-    const twoWeeksAgoDates: string[] = [];
-    const weekStat: TStat[] = [];
-    const millisecondsInDay = 86400000;
-    let numSun = 0;
+  useEffect(() => {
+    setMaxTime(getMaxTime(week));
+    setIndex(dayOfWeek);
+  }, [dayOfWeek, week]);
 
-    for (let daysAgo = 0; daysAgo < 21; daysAgo++) {
-      const findDate = new Date(Date.now() - daysAgo * millisecondsInDay)
-        .toString()
-        .split(" ")
-        .map((el, index) => {
-          if (index < 4) {
-            return el;
-          }
-        })
-        .join(" ")
-        .trim();
-      if (findDate.split(" ")[0] === "Sun" && daysAgo) {
-        numSun++;
-      }
-
-      if (numSun === 0) {
-        currentWeekDates.unshift(findDate);
-      }
-
-      if (numSun === 1) {
-        lastWeekDates.unshift(findDate);
-      }
-      if (numSun === 2) {
-        twoWeeksAgoDates.unshift(findDate);
-      }
-    }
-
-    if (numWeek === 0) {
-      currentWeekDates.forEach((day, index) => {
-        if (stat.find((obj) => obj.date === day)) {
-          weekStat[index] = stat.find((obj) => obj.date === day) as TStat;
-        }
-      });
-    }
-
-    if (numWeek === -1) {
-      lastWeekDates.forEach((day, index) => {
-        if (stat.find((obj) => obj.date === day)) {
-          weekStat[index] = stat.find((obj) => obj.date === day) as TStat;
-        }
-      });
-    }
-
-    if (numWeek === -2) {
-      twoWeeksAgoDates.forEach((day, index) => {
-        if (stat.find((obj) => obj.date === day)) {
-          weekStat[index] = stat.find((obj) => obj.date === day) as TStat;
-        }
-      });
-    }
-
-    return weekStat;
-  }
-
-  function handleClickSelect(event: React.SyntheticEvent) {
+  function handleClickWeek(event: React.SyntheticEvent) {
     if ((event.target as HTMLElement).innerHTML === "Эта неделя") {
-      setWeek(getOneWeekStat(0));
+      setWeek(getWeekStat(0, stat));
     }
     if ((event.target as HTMLElement).innerHTML === "Прошлая неделя") {
-      setWeek(getOneWeekStat(-1));
+      setWeek(getWeekStat(1, stat));
     }
     if ((event.target as HTMLElement).innerHTML === "2 недели назад") {
-      setWeek(getOneWeekStat(-2));
+      setWeek(getWeekStat(2, stat));
     }
   }
-
+  const heightColumn = (totalTime: number) => {
+    if (!totalTime) return "5px";
+    const percent = (totalTime / maxTime) * 80;
+    return `${percent > 159 ? 100 : percent}%`;
+  };
   const columnStyle = (weekOfDay: number) =>
     classNames(styles.column, {
-      [styles.columnRose]: week[weekOfDay],
+      [styles.columnRose]: week[weekOfDay]?.focusTime,
       [styles.columnRed]: weekOfDay === index && week[weekOfDay],
     });
 
   const dayOfWeekStyle = (weekOfDay: number) =>
     classNames({ [styles.colorRed]: weekOfDay === index });
 
+  function getMaxTime(week: TStat[]) {
+    return Math.max(
+      ...week.filter((el) => el).map((el) => el.pauseTime + el.focusTime)
+    );
+  }
+
   return (
     <main className={styles.statistic}>
-      <div onClick={handleClickSelect} className={styles.head}>
+      <div onClick={handleClickWeek} className={styles.head}>
         <h1 className={styles.title}>Ваша активность</h1>
         <Select
           list={[
@@ -162,7 +110,7 @@ export function Statistic() {
                 {" "}
                 Вы работали над задачами{" "}
                 <span style={{ color: "#DC3E22" }}>
-                  {getHoursMinutes(pauseTime + focusTime)}
+                  {getTimeHMS(pauseTime + focusTime)}
                 </span>{" "}
               </span>
             ) : (
@@ -199,19 +147,19 @@ export function Statistic() {
           <div className={styles.scheduleLayout}>
             <div className={styles.lines}>
               <div className={styles.line}></div>
-              <span style={{ width: 57 }}>1 ч 40 мин</span>
+              <span style={{ width: 57 }}>{getTimeHMS(maxTime)}</span>
             </div>
             <div className={styles.lines}>
               <div className={styles.line}></div>
-              <span style={{ width: 57 }}>1 ч 10 мин</span>
+              <span style={{ width: 57 }}>{getTimeHMS(maxTime * 0.75)}</span>
             </div>
             <div className={styles.lines}>
               <div className={styles.line}></div>
-              <span style={{ width: 57 }}>50 мин</span>
+              <span style={{ width: 57 }}>{getTimeHMS(maxTime * 0.5)}</span>
             </div>
             <div className={styles.lines}>
               <div className={styles.line}></div>
-              <span style={{ width: 57 }}>25 мин</span>
+              <span style={{ width: 57 }}>{getTimeHMS(maxTime * 0.25)}</span>
             </div>
             <div
               onClick={() => setIndex(0)}
@@ -286,6 +234,7 @@ export function Statistic() {
               ВТ{" "}
             </button>
             <button
+              autoFocus={true}
               className={dayOfWeekStyle(2)}
               onClick={() => setIndex(2)}
               id="Wed"
@@ -329,7 +278,6 @@ export function Statistic() {
           date: date,
           focusTime: focusTime,
           pauseTime: pauseTime,
-          tomatoes: tomatoes,
           stops: stops,
           index: index,
         }}

@@ -1,13 +1,11 @@
-import React from "react";
-import styles from "./statisticfooter.module.css";
-import { getHoursMinutes } from "../../../../utils/ts/getHoursMinutes";
+import { getTimeHMS } from "../../../../utils/ts/getHoursMinutes";
 import { TStat } from "../Statistic";
-import { log } from "console";
+import styles from "./statisticfooter.module.css";
 
 interface IStatisticFooter {
   date: string;
   week: TStat[];
-  tomatoes: number;
+
   pauseTime: number;
   stops: number;
   focusTime: number;
@@ -15,8 +13,8 @@ interface IStatisticFooter {
 }
 
 export function StatisticFooter({ props }: { props: IStatisticFooter }) {
-  const { week, tomatoes, pauseTime, stops, focusTime, index, date } = props;
-  console.log(Math.round((focusTime / (focusTime + pauseTime)) * 100));
+  const { week, pauseTime, stops, focusTime, index, date } = props;
+
   return (
     <div className={styles.footer}>
       <div
@@ -37,7 +35,7 @@ export function StatisticFooter({ props }: { props: IStatisticFooter }) {
         }`}
       >
         <span>Время на паузе</span>
-        <span className={styles.time}>{getHoursMinutes(pauseTime)}</span>
+        <span className={styles.time}>{getTimeHMS(pauseTime) || "0 с"}</span>
       </div>
       <div
         className={`${styles.footerStatistic}  ${

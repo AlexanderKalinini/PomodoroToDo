@@ -1,1 +1,1 @@
-export * from './StatisticFooter';
+export * from "./StatisticFooter";

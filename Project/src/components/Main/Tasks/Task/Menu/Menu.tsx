@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { useState } from "react";
 import styles from "./menu.module.css";
-
 import { DeleteTask } from "./DeleteTask";
 
 export function Menu({

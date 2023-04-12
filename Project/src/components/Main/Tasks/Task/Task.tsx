@@ -50,25 +50,30 @@ export function Task({ text, numTomatoes, index }: ITask) {
   function handleChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
     setValue(event.target.value);
   }
+  enum actionNames {
+    edit,
+    increment,
+    decrement,
+  }
+  const actions = {
+    [actionNames[0]]: () => {
+      setEdit(!edited);
+      dispatch(editTask({ task: value, index: index }));
+    },
+    [actionNames[1]]: () => {
+      setOpenMenu(true);
+      openCloseState[index] = openMenu;
+      dispatch(incrementTomato(index));
+    },
+    [actionNames[2]]: () => {
+      openCloseState[index] = openMenu;
+      dispatch(decrementTomato(index));
+    },
+  };
 
   function handleClickEditTask(event: BaseSyntheticEvent) {
-    switch (event.target.id) {
-      case "edit":
-        setEdit(!edited);
-        dispatch(editTask({ task: value, index: index }));
-
-        break;
-      case "increment":
-        setOpenMenu(true);
-        openCloseState[index] = openMenu;
-        dispatch(incrementTomato(index));
-
-        break;
-      case "decrement":
-        openCloseState[index] = openMenu;
-        dispatch(decrementTomato(index));
-        break;
-    }
+    if (!actions[event.target.id]) return;
+    actions[event.target.id]();
   }
 
   function handleBlur() {

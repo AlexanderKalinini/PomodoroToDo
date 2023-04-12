@@ -51,12 +51,12 @@
 }
 
 .time {
-  min-width: 375px;
+  min-width: 300px;
   font-size: 150px;
   line-height: 179px;
   font-weight: 200;
   margin-right: 25px;
-  text-align: end;
+  text-align: start;
 }
 
 .plusBtn:hover circle {
