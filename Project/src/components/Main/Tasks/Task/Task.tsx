@@ -8,16 +8,13 @@ import {
 } from "../../../../../Store/Redux-Store/tasksSlice";
 import { Menu } from "./Menu";
 import styles from "./task.module.css";
-
 interface ITask {
   text: string;
   key: string;
   numTomatoes: number;
   index: number;
 }
-
 const openCloseState: boolean[] = [];
-
 export function Task({ text, numTomatoes, index }: ITask) {
   const [edited, setEdit] = useState(false);
   const [value, setValue] = useState(text);

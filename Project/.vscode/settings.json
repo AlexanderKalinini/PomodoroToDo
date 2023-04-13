@@ -4,6 +4,7 @@
     "reduxjs",
     "statisticbody",
     "statisticfooter",
-    "textaria"
+    "textaria",
+    "timercomponent"
   ]
 }
