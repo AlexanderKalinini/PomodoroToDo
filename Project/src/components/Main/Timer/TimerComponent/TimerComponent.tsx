@@ -1,6 +1,5 @@
-import React, { Dispatch, SetStateAction } from "react";
-import styles from "./timercomponent.module.css";
 import classNames from "classnames";
+import styles from "./timercomponent.module.css";
 
 interface ITimer {
   intervalId: NodeJS.Timeout | undefined;
@@ -50,7 +49,6 @@ export function TimerComponent({
   });
 
   const task = <span style={{ color: "#333" }}>{tasks[0]?.task}</span>;
-
   return (
     <div className={styles.timer}>
       <div className={timerHead}>
