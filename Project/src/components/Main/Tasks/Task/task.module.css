@@ -54,3 +54,8 @@
 .textaria::selection {
   background-color: var(--greyF4);
 }
+@media (max-width: 700px) {
+  .list {
+    width: 100%;
+  }
+}

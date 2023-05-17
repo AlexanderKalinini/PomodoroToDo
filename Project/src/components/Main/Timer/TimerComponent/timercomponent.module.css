@@ -27,8 +27,7 @@
 
 .timerHead_span {
   vertical-align: center;
-
-  width: 250px;
+  margin-right: 20px;
   max-height: 36px;
   font-weight: 700;
   overflow: hidden;
@@ -50,7 +49,6 @@
 }
 
 .time {
-  min-width: 300px;
   font-size: 150px;
   line-height: 179px;
   font-weight: 200;
@@ -71,7 +69,6 @@
   text-align: center;
   color: #fff;
   background-color: var(--green);
-
   line-height: 17px;
   margin-right: 25px;
 }
@@ -97,4 +94,21 @@
 .btnStopRed {
   color: var(--red);
   outline-color: var(--red);
+}
+@media (max-width: 1024px) {
+  .timer {
+    order: 1;
+    margin-bottom: 50px;
+  }
+}
+@media (max-width: 700px) {
+  .time {
+    font-size: 120px;
+  }
+}
+
+@media (max-width: 500px) {
+  .time {
+    font-size: 100px;
+  }
 }

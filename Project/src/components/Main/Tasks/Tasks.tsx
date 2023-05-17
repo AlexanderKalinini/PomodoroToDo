@@ -53,7 +53,7 @@ export function Tasks() {
           выполнены. Каждые 4 «помидора» делайте длинный перерыв (15-30 минут).
         </p>
       </div>
-      <form action="">
+      <form className={styles.form}>
         <textarea
           onChange={handleChange}
           value={value}

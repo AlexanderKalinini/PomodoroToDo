@@ -90,7 +90,7 @@ export function TimerComponent({
             )}{" "}
           </span>
         </div>
-        <div>
+        <div style={{ marginBottom: "50px" }}>
           {!Boolean(intervalId) ? (
             <button onClick={handleClickStart} className={styles.btnStart}>
               Старт

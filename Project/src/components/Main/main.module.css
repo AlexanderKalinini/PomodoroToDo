@@ -1,9 +1,24 @@
 .main {
+  display: grid;
+  grid-auto-flow: row dense;
   max-width: 1440px;
   margin: 0 auto;
 
-  display: grid;
   padding: 0 80px;
-  grid-template-columns: 531px minmax(200px, 733px);
+  grid-template-columns: 37% 51%;
   justify-content: space-between;
+}
+
+@media (max-width: 1024px) {
+  .main {
+    display: flex;
+    flex-direction: column;
+    padding: 0 50px;
+  }
+}
+
+@media (max-width: 500px) {
+  .main {
+    padding: 0 15px;
+  }
 }

@@ -24,7 +24,7 @@ export function Header() {
           height={16}
           alt="stat"
         />
-        <span>Статистика</span>
+        <span className={styles.wordStat}>Статистика</span>
       </Link>
     </header>
   );

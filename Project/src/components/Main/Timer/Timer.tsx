@@ -16,7 +16,7 @@ import { TimerComponent } from "./TimerComponent";
 export function Timer() {
   const [tasks]: { task: string; numTomatoes: number }[][] =
     useGetTasksAfterRender();
-  const [seconds, setSeconds] = useState(3);
+  const [seconds, setSeconds] = useState(1500);
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | undefined>();
   const [paused, setPause] = useState(false);
   const [numTomato, setNumTomato] = useState(1);
@@ -49,7 +49,7 @@ export function Timer() {
       setDoneTomato(0);
       setNumTomato(1);
       setRest(false);
-      setSeconds(3);
+      setSeconds(1500);
       setNumTask(1);
       return;
     }
@@ -60,7 +60,7 @@ export function Timer() {
       setDoneTomato(0);
       setNumTomato(1);
       setRest(false);
-      setSeconds(3);
+      setSeconds(1500);
       setNumTask(1);
       return;
     }
@@ -70,7 +70,7 @@ export function Timer() {
       setIntervalId(undefined);
       dispatch(deleteTask(0));
       setNumTomato(1);
-      setSeconds(3);
+      setSeconds(1500);
       setDoneTomato(0);
       setRest(false);
       setNumTask((prev) => prev + 1);
@@ -78,7 +78,7 @@ export function Timer() {
 
     if (seconds === 0) {
       if (!rest) {
-        setSeconds(5);
+        setSeconds(300);
         setRest(true);
         dispatch(addFocusTime(focusTime));
         setFocusTime(0);
@@ -89,7 +89,7 @@ export function Timer() {
         clearInterval(intervalId);
         setIntervalId(undefined);
         setNumTomato((prev) => prev + 1);
-        setSeconds(3);
+        setSeconds(1500);
         dispatch(decrementTomato(0));
         dispatch(addTomatoes());
         setDoneTomato((prev) => prev + 1);
@@ -120,7 +120,7 @@ export function Timer() {
   function handleClickStop() {
     clearInterval(intervalId);
     setIntervalId(undefined);
-    setSeconds(3);
+    setSeconds(1500);
     setPause(false);
     setRest(false);
     dispatch(addStops());
@@ -150,7 +150,7 @@ export function Timer() {
 
   function handleClickDone() {
     setIntervalId(undefined);
-    setSeconds(3);
+    setSeconds(1500);
     setPause(false);
     setRest(false);
     dispatch(decrementTomato(0));

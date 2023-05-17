@@ -50,4 +50,7 @@
   .header {
     padding: 0 15px;
   }
+  .wordStat {
+    display: none;
+  }
 }
